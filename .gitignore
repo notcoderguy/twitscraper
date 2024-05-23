@@ -1,0 +1,4 @@
+venv/
+.env
+cookies.json
+tweets.json
