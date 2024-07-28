@@ -1,8 +1,8 @@
+import asyncio
 from twikit import Client
 import json
 import os
 from dotenv import load_dotenv
-import time
 import random
 
 def extract_tweet_data(tweet):
@@ -15,7 +15,7 @@ def extract_tweet_data(tweet):
     
     return filtered_tweet_data
 
-def login_to_twitter():
+async def login_to_twitter():
     client = Client('en-US')
     
     try:
@@ -35,7 +35,7 @@ def login_to_twitter():
         # Create an instance of the client
         client = Client('en-US')
 
-        client.login(
+        await client.login(
             auth_info_1=USERNAME,
             auth_info_2=EMAIL,
             password=PASSWORD
@@ -48,9 +48,13 @@ def login_to_twitter():
 
         return client
 
-def get_tweets(client):
+async def get_tweets(client):
     total_tweets = 0
-    tweets = client.get_user_tweets(os.getenv('TARGET_USER_ID'), 'Tweets', count=20)
+    try:
+        tweets = await client.get_user_tweets(os.getenv('TARGET_USER_ID'), 'Tweets', count=20)
+    except Exception as e:
+        user = await client.get_user_by_screen_name(os.getenv('TARGET_USERNAME'))
+        tweets = await client.get_user_tweets(user.id, 'Tweets', count=20)
 
     for tweet in tweets:
         tweet_content = extract_tweet_data(tweet)
@@ -68,11 +72,11 @@ def get_tweets(client):
     print("[+] Total Tweets: " + str(total_tweets))
 
     print("[+] Sleeping for 10-60 seconds")
-    time.sleep(random.randint(10, 60))
+    await asyncio.sleep(random.randint(10, 60))
 
     while True:
         print("[+] Getting more Tweets")
-        more_tweets = tweets.next()
+        more_tweets = await tweets.next()
         tweets = more_tweets
 
         for tweet in more_tweets:
@@ -91,18 +95,20 @@ def get_tweets(client):
         print("[+] Total Tweets: " + str(total_tweets))
 
         print("[+] Sleeping for 10-60 seconds")
-        time.sleep(random.randint(10, 60))
+        await asyncio.sleep(random.randint(10, 60))
 
-
-if __name__ == '__main__':
+async def main():
     # Load the .env file
     print("[+] Loading .env file")
-    config = load_dotenv(".env")
+    load_dotenv(".env")
 
     # Login to Twitter
     print("[+] Logging in to Twitter")
-    client = login_to_twitter()
+    client = await login_to_twitter()
 
     # Get Tweets
     print("[+] Getting Tweets")
-    get_tweets(client)
+    await get_tweets(client)
+
+if __name__ == '__main__':
+    asyncio.run(main())
