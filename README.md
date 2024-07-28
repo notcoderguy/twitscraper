@@ -20,7 +20,7 @@ TwitScraper is a Python-based tool to scrape tweets from a specific Twitter user
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/twitscraper.git
+    git clone https://github.com/notcoderguy/twitscraper.git
     cd twitscraper
     ```
 
@@ -37,42 +37,28 @@ TwitScraper is a Python-based tool to scrape tweets from a specific Twitter user
     pip install -r requirements.txt
     ```
 
-4. Create a `.env` file in the project root and add your Twitter credentials:
+4. Create a `.env` file in the project root by copying the example file:
 
-    ```
+    ```file
+    # .env
     USERNAME=your_twitter_username
     EMAIL=your_twitter_email
     PASSWORD=your_twitter_password
+    
     TARGET_USER_ID=target_twitter_user_id
+    OR
+    TARGET_USERNAME=target_twitter_username
     ```
 
 ## Usage
 
-1. Load environment variables and log in to Twitter:
-
-    ```python
-    from dotenv import load_dotenv
-
-    load_dotenv(".env")
-    ```
-
-2. Log in to Twitter and save cookies for future use:
-
-    ```python
-    client = login_to_twitter()
-    ```
-
-3. Get tweets from the target user and save them to `tweets.json`:
-
-    ```python
-    get_tweets(client)
-    ```
-
-4. Run the main script:
+1. Run the `main.py` script:
 
     ```bash
     python main.py
     ```
+
+2. Open the `tweets.json` file in a text editor to view the tweet data.
 
 ## Project Structure
 
@@ -82,14 +68,11 @@ twitscraper/
 ├── main.py                # Main script to run the application
 ├── requirements.txt       # List of required Python packages
 ├── .env                   # Environment variables (not included in the repo)
+├── .env.example           # Example .env file
+├── cookies.json           # Cookies for authentication
+├── tweets.json            # JSON file containing the tweet data
 └── README.md              # This README file
 ```
-
-## Code Overview
-
-- `extract_tweet_data(tweet)`: Extracts and serializes relevant data from a tweet.
-- `login_to_twitter()`: Logs in to Twitter using cookies or credentials and saves cookies for future use.
-- `get_tweets(client)`: Retrieves tweets from the specified user and saves them to a JSON file.
 
 ## License
 
