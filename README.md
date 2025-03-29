@@ -2,6 +2,17 @@
 
 TwitScraper is a Python-based tool to scrape tweets from a specific Twitter user. It uses the `twikit` library to interact with the Twitter API and stores the retrieved tweets in a JSON file.
 
+## To Do
+
+- [ ] Use FastAPI for a more robust API interface.
+- [ ] Implement a database to store user data and tweets.
+- [ ] Add a web interface for easier interaction.
+- [ ] Implement error handling and logging.
+- [ ] Add unit tests for better code coverage.
+- [ ] Optimize the code for performance.
+- [ ] Add support for scraping tweets from multiple users.
+- [ ] Implement a command-line interface (CLI) for easier usage.
+
 ## Features
 
 - Log in to Twitter using cookies or credentials.
